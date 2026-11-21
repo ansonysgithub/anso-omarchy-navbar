@@ -1,5 +1,5 @@
 .pragma library
-const metricIds = ["cpu", "memory", "gpu", "heat", "disk", "diskio", "net", "vpn", "ip"]
+const metricIds = ["cpu", "memory", "gpu", "heat", "disk", "diskio", "net", "vpn", "ip", "mouse"]
 function adapters(sample) {
     if (Array.isArray(sample.gpus)) return sample.gpus
     return sample.gpu && sample.gpu.id ? [sample.gpu] : []

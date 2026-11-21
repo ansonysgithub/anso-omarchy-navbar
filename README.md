@@ -8,6 +8,7 @@ A personal fork of [lucaslus/omarchy-statusline](https://github.com/lucaslus/oma
 - **Network speed** (`net`) with a 60-second sparkline.
 - **Public IP** (`ip`) via api.ipify.org, refreshed every 5 minutes and when VPN links change.
 - **VPN / ZeroTier status** (`vpn`): detects WireGuard, tun/tap and ZeroTier interfaces.
+- **Logitech G703 battery** (`mouse`): reads the JSON data source from `anso-omarchy` once a minute without blocking system telemetry. It shows a dim `G703 —` when no reading is available and turns red at 20% or below.
 - Fix: bar metric order from `shell.json` arrives as a QML list, which upstream's `Array.isArray` check rejected; it is now copied correctly.
 
 Everything else (CPU per-core bars, memory, per-GPU utilization and temperatures, disk I/O, theme-following colors, settings page) comes from upstream; see [docs/UPSTREAM_README.md](docs/UPSTREAM_README.md).
@@ -28,17 +29,18 @@ Metrics and order live in the widget's entry in `~/.config/omarchy/shell.json`:
 {
   "id": "anso.statusline",
   "layout": "minimal",
-  "metrics": ["cpu", "memory", "gpu", "heat", "disk", "vpn", "net", "diskio", "ip"]
+  "metrics": ["mouse", "cpu", "heat", "gpu", "memory", "disk", "vpn", "net", "diskio", "ip"]
 }
 ```
 
-Available metrics: `cpu`, `memory`, `gpu`, `heat`, `disk`, `diskio`, `net`, `vpn`, `ip`. When the bar runs out of room, metrics at the **end** of the list are hidden first, so put the ones you care about most up front.
+Available metrics: `cpu`, `memory`, `gpu`, `heat`, `disk`, `diskio`, `net`, `vpn`, `ip`, `mouse`. When the bar runs out of room, metrics at the **end** of the list are hidden first, so put the ones you care about most up front. Existing statusline configurations can enable `mouse` from the widget's settings page.
 
 ## Requirements
 
 - Omarchy with the Quickshell-based Omarchy Shell
 - Python 3.11+ (standard library only)
 - Optional: `nvidia-smi` for NVIDIA telemetry; `iproute2` (`ip`) for VPN detection
+- Optional: `anso-omarchy`'s `anso-logitech-battery` source and its Solaar user service for Logitech battery telemetry. Install the source with `install -Dm755 ~/dev/anso-omarchy/home/.local/bin/anso-logitech-battery ~/.local/bin/anso-logitech-battery`, then keep Solaar running.
 
 ## Development
 

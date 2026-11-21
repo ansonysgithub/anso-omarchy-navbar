@@ -25,12 +25,22 @@ Panel {
         return g >= 1000 ? (g / 1024).toFixed(1) + "T" : g >= 10 ? Math.round(g) + "G" : g.toFixed(1) + "G"
     }
     readonly property var metricIds: preferences.metrics.reduce((ids, id) => {
-        if (id === "gpu") return ids.concat(gpuAdapters.length
-            ? gpuAdapters.filter(g => Layout.gpuEnabled(settings, "gpuVisibility", g.id)).map(g => "gpu:" + g.id)
-            : ["gpu"])
+        if (id === "gpu") {
+            const usage = gpuAdapters.length
+                ? gpuAdapters.filter(g => Layout.gpuEnabled(settings, "gpuVisibility", g.id)).map(g => "gpu:" + g.id)
+                : ["gpu"]
+            const temperatures = preferences.metrics.indexOf("heat") >= 0
+                ? gpuAdapters.filter(g => Layout.gpuEnabled(settings, "gpuTemperatureVisibility", g.id)).map(g => "gpuHeat:" + g.id)
+                : []
+            return ids.concat(usage, temperatures)
+        }
         if (id === "disk") return ids.concat(diskMounts.length ? diskMounts.map(m => "disk:" + m.path) : ["disk"])
-        if (id === "heat") return ids.concat(settings.cpuTemperature !== false ? ["cpuHeat"] : [])
-            .concat(gpuAdapters.filter(g => Layout.gpuEnabled(settings, "gpuTemperatureVisibility", g.id)).map(g => "gpuHeat:" + g.id))
+        if (id === "heat") {
+            const temperatures = settings.cpuTemperature !== false ? ["cpuHeat"] : []
+            if (preferences.metrics.indexOf("gpu") < 0)
+                temperatures.push(...gpuAdapters.filter(g => Layout.gpuEnabled(settings, "gpuTemperatureVisibility", g.id)).map(g => "gpuHeat:" + g.id))
+            return ids.concat(temperatures)
+        }
         return ids.concat(id)
     }, [])
     readonly property real fullWidth: measuredWidth(metricIds.length, preferences.graphs)
@@ -80,6 +90,11 @@ Panel {
     readonly property color heatColor: Metrics.palette("yellow", "color3", Color.urgent)
     readonly property color netColor: Metrics.palette("cyan", "color6", Color.accent)
     readonly property color vpnColor: Metrics.palette("green", "color2", Color.accent)
+    readonly property color batteryColor: !Number.isFinite((s.mouseBattery || {}).percent)
+        ? barForeground
+        : Number((s.mouseBattery || {}).percent) <= 20
+            ? Metrics.palette("red", "color1", Color.urgent)
+            : Metrics.palette("green", "color2", Color.accent)
     readonly property var net: s.net || ({})
     readonly property var s: Metrics.sample
     readonly property var metrics: {
@@ -95,7 +110,8 @@ Panel {
             vpn: Metrics.vpnLinks.length
                 ? {kind: "toggle", name: "VPN", value: "ON", ink: vpnColor, chart: ""}
                 : {kind: "toggle", name: "VPN", value: "OFF", ink: barForeground, dim: true, chart: ""},
-            ip: {kind: "ip", name: "IP", value: net.publicIp || "—", ink: netColor, chart: ""}
+            ip: {kind: "ip", name: "IP", value: net.publicIp || "—", ink: netColor, chart: ""},
+            mouse: {kind: "percent", name: "G703", value: Metrics.percent((s.mouseBattery || {}).percent), ink: batteryColor, dim: !Number.isFinite((s.mouseBattery || {}).percent), chart: ""}
         }
         gpuAdapters.forEach((gpu, index) => {
             const label = gpuAdapters.length > 1 ? "GPU" + index : "GPU"

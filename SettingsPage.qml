@@ -30,7 +30,8 @@ ColumnLayout {
         const ids = preferences.metrics.slice()
         const i = ids.indexOf(id), next = i + delta
         if (i < 0 || next < 0 || next >= ids.length) return
-        const other = ids[next]; ids[next] = id; ids[i] = other
+        ids.splice(i, 1)
+        ids.splice(next, 0, id)
         change("metrics", ids)
     }
     function toggleGpu(key, id) {
@@ -176,6 +177,7 @@ ColumnLayout {
     Repeater {
         model: root.preferences.metrics.concat(LayoutModel.metricIds.filter(id => root.preferences.metrics.indexOf(id) < 0))
         ColumnLayout {
+            id: metricSettingRow
             required property string modelData
             readonly property bool selected: root.preferences.metrics.indexOf(modelData) >= 0
             readonly property color metricColor: ({
@@ -187,7 +189,8 @@ ColumnLayout {
                 heat: Metrics.palette("yellow", "color3", Color.urgent),
                 net: Metrics.palette("cyan", "color6", Color.accent),
                 vpn: Metrics.palette("green", "color2", Color.accent),
-                ip: Metrics.palette("cyan", "color6", Color.accent)
+                ip: Metrics.palette("cyan", "color6", Color.accent),
+                mouse: Metrics.palette("green", "color2", Color.accent)
             })[modelData]
             Layout.fillWidth: true
             spacing: Style.space(4)
@@ -203,13 +206,13 @@ ColumnLayout {
                 }
                 Toggle {
                     Layout.fillWidth: true
-                    label: ({cpu: "CPU", memory: "Memory", gpu: root.gpus.length > 1 ? "GPU utilization (" + root.gpus.length + ")" : "GPU utilization", heat: "Temperatures", disk: "Disk space (all drives)", diskio: "Disk read / write", net: "Network speed", vpn: "VPN / ZeroTier", ip: "Public IP"})[modelData]
+                    label: ({cpu: "CPU", memory: "Memory", gpu: root.gpus.length > 1 ? "GPU utilization (" + root.gpus.length + ")" : "GPU utilization", heat: "Temperatures", disk: "Disk space (all drives)", diskio: "Disk read / write", net: "Network speed", vpn: "VPN / ZeroTier", ip: "Public IP", mouse: "Logitech G703 battery"})[modelData]
                     checked: selected
                     enabled: !checked || root.preferences.metrics.length > 1
                     onClicked: root.toggleMetric(modelData)
                 }
-                Button { text: "↑"; tooltipText: "Move earlier"; enabled: selected && root.preferences.metrics.indexOf(modelData) > 0; onClicked: root.move(modelData, -1) }
-                Button { text: "↓"; tooltipText: "Move later"; enabled: selected && root.preferences.metrics.indexOf(modelData) < root.preferences.metrics.length - 1; onClicked: root.move(modelData, 1) }
+                Button { text: "↑"; tooltipText: "Move earlier"; enabled: metricSettingRow.selected && root.preferences.metrics.indexOf(metricSettingRow.modelData) > 0; onClicked: root.move(metricSettingRow.modelData, -1) }
+                Button { text: "↓"; tooltipText: "Move later"; enabled: metricSettingRow.selected && root.preferences.metrics.indexOf(metricSettingRow.modelData) < root.preferences.metrics.length - 1; onClicked: root.move(metricSettingRow.modelData, 1) }
             }
             Repeater {
                 model: modelData === "gpu" ? root.gpus : []

@@ -225,6 +225,41 @@ class PublicIp:
             return self.value
 
 
+class LogitechBattery:
+    """Read the G703 source asynchronously and refresh it at most once a minute."""
+
+    def __init__(self, interval=60):
+        self.interval = interval
+        self.checked = 0.0
+        self.value = {"percent": None, "status": "unavailable"}
+        self.lock = threading.Lock()
+        self.busy = False
+        self.command = Path.home() / ".local/bin/anso-logitech-battery"
+
+    def fetch(self):
+        value = {"percent": None, "status": "unavailable"}
+        try:
+            result = subprocess.run([str(self.command)], capture_output=True, text=True, timeout=8)
+            payload = json.loads(result.stdout)
+            percent = payload.get("battery_percent")
+            if result.returncode == 0 and isinstance(percent, int) and 0 <= percent <= 100:
+                value = {"percent": percent, "status": str(payload.get("status") or "unknown")}
+        except (OSError, subprocess.SubprocessError, ValueError, AttributeError):
+            pass
+        with self.lock:
+            self.value = value
+            self.busy = False
+
+    def get(self):
+        now = time.monotonic()
+        with self.lock:
+            retry_after = 15 if self.value["percent"] is None else self.interval
+            if now - self.checked >= retry_after and not self.busy:
+                self.checked, self.busy = now, True
+                threading.Thread(target=self.fetch, daemon=True).start()
+            return dict(self.value)
+
+
 def sensors(root):
     result = []
     for hw in sorted(root.glob("class/hwmon/hwmon*")):
@@ -333,6 +368,7 @@ class Collector:
         self.net_previous = {}
         self.net_time = time.monotonic()
         self.public_ip = PublicIp()
+        self.logitech_battery = LogitechBattery()
 
     def sample(self):
         disk_now = time.monotonic()
@@ -360,7 +396,8 @@ class Collector:
         gpu = next((g for g in gpus if g["percent"] is not None), gpus[0] if gpus else {})
         return {"time": time.time(), "cpu": loads.get("cpu"), "cores": [loads[k] for k in sorted(loads, key=lambda k: int(k[3:] or -1)) if k != "cpu"],
                 "cpuModel": self.cpu_model, "cpuTemperature": max(cpu_temps) if cpu_temps else None,
-                "disk": disk, "net": net, "memory": memory(read(self.proc / "meminfo")), "gpu": gpu, "gpus": gpus, "palette": palette(),
+                "disk": disk, "net": net, "memory": memory(read(self.proc / "meminfo")), "gpu": gpu, "gpus": gpus,
+                "mouseBattery": self.logitech_battery.get(), "palette": palette(),
                 "error": "Cannot read /proc CPU or memory data" if not ticks or not read(self.proc / "meminfo") else ""}
 
 

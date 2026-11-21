@@ -69,6 +69,10 @@ Canvas {
             circle(14, 14, 11)
             c.beginPath(); c.ellipse(9, 3, 10, 22); c.stroke()
             line(3, 14, 25, 14); line(5, 8.5, 23, 8.5); line(5, 19.5, 23, 19.5)
+        } else if (name === "mouse") {
+            c.strokeRect(3, 7, 20, 14)
+            c.fillRect(23, 11, 2, 6)
+            c.fillRect(6, 10, 5, 8)
         }
     }
 }

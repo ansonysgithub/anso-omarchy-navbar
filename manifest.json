@@ -2,9 +2,9 @@
   "schemaVersion": 1,
   "id": "anso.statusline",
   "name": "Anso Statusline",
-  "version": "0.4.0-anso.2",
+  "version": "0.4.0-anso.3",
   "author": "anso (forked from lucas/omarchy-statusline)",
-  "description": "CPU, memory, GPU, all-drive disk space, temperature and network (speed, public IP, VPN) at a glance.",
+  "description": "CPU, memory, GPU, all-drive disk space, temperature, network and Logitech mouse battery at a glance.",
   "kinds": [
     "bar-widget"
   ],
@@ -22,10 +22,11 @@
       "intervalSeconds": 2,
       "showHistory": true,
       "metrics": [
+        "mouse",
         "cpu",
-        "memory",
-        "gpu",
         "heat",
+        "gpu",
+        "memory",
         "net",
         "vpn",
         "ip"
