@@ -15,7 +15,7 @@ Everything else (CPU per-core bars, memory, per-GPU utilization and temperatures
 ## Install
 
 ```bash
-omarchy plugin add https://github.com/ansonysgithub/anso.statusline.git --enable --yes
+omarchy plugin add https://github.com/ansonysgithub/anso-omarchy-navbar.git --enable --yes
 ```
 
 Or clone it to `~/.config/omarchy/plugins/anso.statusline` and enable it from Omarchy's plugin settings. After editing files, run `omarchy restart shell` (hot reload can leave the widget stale).
