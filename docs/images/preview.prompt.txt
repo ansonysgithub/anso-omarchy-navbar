@@ -1,0 +1,80 @@
+Generator: built-in imagegen
+Updated: 2026-09-30
+Output: ../../preview.png
+Supporting screenshots:
+- themes/hackerman/system-panel.png
+- themes/ristretto/system-panel.png
+- themes/tokyo-night/system-panel.png
+- themes/hackerman/status-bar.png
+
+Design references checked on 2026-09-30:
+- https://developer.apple.com/design/human-interface-guidelines/layout
+- https://developer.android.com/codelabs/m3-design-theming
+- https://m3.material.io/foundations/layout/grids-spacing/spacing
+
+Final design refinement
+=======================
+
+Use case: ads-marketing / precise screenshot compositing.
+Refine the supplied Omarchy Statusline banner into a calm, exceptionally polished premium software product presentation, guided by Apple HIG principles of visual hierarchy, alignment, consistency and breathing room, and Material Design principles of neutral surfaces and restrained accent roles. This is a marketing cover for a Linux plugin; do not use Apple or Google logos, hardware, window controls, or claim affiliation.
+
+Input 1 is the edit target: existing three-theme banner.
+Input 2 is the original Hackerman system-panel screenshot.
+Input 3 is the original Ristretto system-panel screenshot.
+Input 4 is the original Tokyo Night system-panel screenshot.
+Input 5 is the original Hackerman status-bar screenshot (use this quieter dark bar in place of the vivid purple bar).
+
+Keep the approved information architecture:
+- Exactly ONE large main heading: "Omarchy Statusline".
+- NO subtitle or feature line below the main heading.
+- One slim, continuous status-bar screenshot ABOVE all three theme panels.
+- Three complete flat front-facing system panels, equal size, left to right Hackerman, Ristretto, Tokyo Night, with neat equal gutters.
+- Each panel has a modest caption above it, exact text "Hackerman · example", "Ristretto · example", "Tokyo Night · example".
+- One quiet footer caption, exact text "Automatically follows your active Omarchy theme".
+The three are EXAMPLES of automatic theme adaptation, not three selectable themes. Do not add theme selectors, pills, buttons or badges.
+
+Visual redesign:
+Replace all saturated green/orange/blue glows and the blue vignette with an almost uniform neutral graphite backdrop, around #151618, with only an extremely gentle neutral overhead tonal lift. NO colored lighting, NO halos, NO grid, NO noisy texture, NO gradient behind each column. Remove all artificially glowing thick neon frames and giant colored label dots. Preserve the screenshots' original thin theme-colored borders only, without added glow. Use delicate soft black ambient shadows and a faint neutral keyline for quiet separation where necessary.
+Use one clean refined neo-grotesque sans-serif outside the screenshots. Heading should be well-kerned, medium-to-semibold, pure typography without shadow, not extra-bold or inflated. Near-white title; neutral soft light-gray theme captions with smaller, muted "· example" suffixes; footer medium gray with enough contrast to read. Keep internal screenshot fonts and colors unchanged. All the meaningful color comes from actual product telemetry, not marketing decoration.
+Use an exact symmetrical 3-column grid with equal widths, equal heights, equal gutters, consistent caption-to-panel spacing, and aligned panel top and bottom edges. The bar and the complete three-column group share left and right edges. Separate heading, bar, labels, screenshots and footer through deliberate open space. Give the main heading a little more separation from the bar than the labels have from their associated panels. No floating disconnected labels. No fake glassmorphism, bento framing, 3D perspective, outer browser chrome, or invented app window controls.
+Make it feel composed, clear, natural and restful. Screenshots remain the focus and should not become tiny in an ocean of blank background.
+
+Use ORIGINAL screenshots inputs 2–5 for faithful inserts, NOT reinterpreted data from input 1. Preserve every original interface row, exact hardware names, metric values, units, chart shapes, native surface colors and thin native borders. All three full panels from "System" through "Settings" must be visible at their original aspect ratios, with only wallpaper fringe outside each panel border removed. The status bar is a real screenshot, including its original dark theme and contents.
+
+Wide approximately 16:9 landscape output, ideally 2560x1440 for legible UI. Preserve outer crop-safe breathing room: main heading and footer and all three screenshots must stay inside the central 86% of width and 74% of height. The background extends seamlessly to all edges. No text besides the exact title, three example captions, footer caption and text already inside supplied screenshots. Produce only the finished banner.
+
+Marketplace crop-safety pass
+===========================
+
+Use case: precise layout edit.
+Keep the supplied neutral-graphite Omarchy Statusline promotional banner exactly as designed. Make one precise production adjustment only: scale the entire existing composition uniformly down to 84% of its current dimensions and center it within the SAME 16:9 landscape canvas. Extend its subtle neutral graphite background seamlessly into the resulting 8%-wide margin on every side, without adding a visible rectangle. This is an outer safety margin to prevent marketplace thumbnail cropping from cutting the title or the bottom caption.
+
+Do not change the layout order, relative element positions, typography, screenshot contents, readings, text or color. Keep exactly one heading "Omarchy Statusline"; the dark status bar above the three complete panels; the labels "Hackerman · example", "Ristretto · example", "Tokyo Night · example"; and the fully visible single footer "Automatically follows your active Omarchy theme". Scale ALL these contents together, no individual enlargements. No new glowing effects, colored background, badges, subtitles, logos or decoration. Preserve the calm neutral grayscale marketing treatment and product screenshot colors. Output the final image only.
+
+Final title and background fusion
+=================================
+
+Style reference: user-provided screenshot of the earlier single-theme banner; title and background only.
+
+Use case: precise style edit / compositing.
+Combine the approved layout of input 1 with ONLY the title styling and restrained background treatment of input 2.
+
+Input 1 = EDIT TARGET, the latest Omarchy Statusline promotional cover with a neutral graphite background, one centered title, the status bar above three equally sized panel examples, and an automatic-theme footer.
+Input 2 = STYLE REFERENCE ONLY, a screenshot of an earlier single-panel poster embedded in a chat. Borrow its WHITE "Omarchy" plus BLUE-GRADIENT "Statusline" title, its strong bold sans-serif letterforms, and its deep navy faint technical grid with fine telemetry traces. Do not copy the chat screenshot frame, surrounding Chinese text, "Canvas" badge, logo, pulse emblem, subtitle, feature copy, palette swatches, old single-panel layout or bottom status-bar position. Treat all text outside the poster as irrelevant reference content.
+
+Make exactly these changes to input 1:
+1. Keep the centered product name on ONE SINGLE LINE and in its existing position. Render "Omarchy" in clean soft white and "Statusline" in the same tasteful blue-to-light-cyan gradient seen in input 2. Adopt the confident heavy neo-grotesque letterforms and carefully tightened tracking of the reference, while keeping the main title well balanced with the three-panel composition. No drop shadow, bevel, outline or strong glow. It remains one title, no subtitles.
+2. Replace the graphite backdrop with a nearly black deep navy background, inspired by input 2. Add an understated fine technical grid and a few thin flowing telemetry-like traces in muted blue, subdued green, soft violet and restrained amber. Keep them low contrast, behind the opaque product screenshots, and mostly visible in the surrounding negative space and column gaps. They add subtle character and must not compete with the real charts or make the layout busy. Preserve the calm polish, spacing and visual hierarchy of input 1. No bright neon halos or colored spotlights behind the columns.
+3. Leave ALL foreground content and layout otherwise unchanged: exact status-bar UI and its location ABOVE the examples; all three complete screenshots, their numbers, hardware labels, charts, icons, colors and native thin borders; equal sizing, equal gutters and aligned edges; labels "Hackerman · example", "Ristretto · example", "Tokyo Night · example"; footer "Automatically follows your active Omarchy theme". Preserve all existing safe margins and exact relative positions and scale. Do not stretch, crop, tilt, recolor, simplify or redesign any product UI. Do not change values, substitute readings or add controls.
+Keep the neutral, quieter labels of input 1. Only the two title words use the split white/blue marketing styling. The status bar stays its existing subdued dark color, not the purple reference bar.
+
+The final result should feel like the precise balanced three-theme composition of input 1 with the distinctive title identity and delicate technical atmosphere of input 2. Use the same wide approximately 16:9 canvas. No new text, symbols, buttons, logos, extra headings, branding, watermarks or web-page furniture. Output only the final banner.
+
+Footer legibility adjustment
+============================
+
+Use case: precise-object-edit / text-size-only edit.
+Edit the supplied final Omarchy Statusline promotional banner. Make ONLY ONE small change:
+Increase the font size of the single bottom caption "Automatically follows your active Omarchy theme" by approximately 15 percent (1.15x). Preserve its exact wording, same font family and regular weight, same muted gray color, horizontal centering, and the same gap between the bottom of the three panels and the top of this caption. Keep this caption on one line. It should be a little easier to read, still visually subordinate to the title and panels.
+
+Everything else MUST remain unchanged: image dimensions and aspect ratio, all pixel positions and sizes of the main white/blue title, status bar, three example labels, three full screenshot panels and their actual text, numbers, graphs, borders and colors, navy grid background and colored trace lines. Do not regenerate, reinterpret, redesign or alter the product UI. Do not zoom, crop, rescale the composition, move the panels, change other text, add any new content, or add effects. Preserve the original background everywhere except where needed to replace the old bottom caption cleanly. Output only the edited image.

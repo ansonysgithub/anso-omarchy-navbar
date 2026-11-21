@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "anso.statusline",
+  "name": "Anso Statusline",
+  "version": "0.4.0-anso.2",
+  "author": "anso (forked from lucas/omarchy-statusline)",
+  "description": "CPU, memory, GPU, all-drive disk space, temperature and network (speed, public IP, VPN) at a glance.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "entryPoints": {
+    "barWidget": "Widget.qml"
+  },
+  "barWidget": {
+    "displayName": "Anso Statusline",
+    "category": "System",
+    "allowMultiple": false,
+    "defaultSection": "right",
+    "defaults": {
+      "layout": "default",
+      "autoStart": true,
+      "intervalSeconds": 2,
+      "showHistory": true,
+      "metrics": [
+        "cpu",
+        "memory",
+        "gpu",
+        "heat",
+        "net",
+        "vpn",
+        "ip"
+      ]
+    }
+  }
+}
